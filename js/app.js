@@ -3,15 +3,44 @@
 const cardIconClasses = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-bomb', 'fa-leaf', 'fa-bicycle', 'fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-bomb', 'fa-leaf', 'fa-bicycle']
 
 // shuffle the array of card icons using the provided "shuffle" method
-shuffle(cardIconClasses);
+
+// * Create a list that holds all of my cards
+let deckList = document.createElement('ul');
+deckList.classList.add('deck');
+
+document.body.querySelector('.container').appendChild(deckList);
 
 function createDeck() {
 
+  shuffle(cardIconClasses);
 
-   // * Create a list that holds all of my cards
-  const deckList = document.createElement('ul');
-  deckList.classList.add('deck');
+  // let cardList = document.querySelector('.card');
+  // if (cardList != null) {
+  // cardList.remove();
+  // }
+  //
+  // let allCards = document.querySelectorAll('.card');
+  // console.log(allCards);
 
+  // convert NodeList to Array
+  //let allCardsArray = [];
+  // for(let i = allCards.length; i--; allCardsArray.unshift(allCards[i]));
+  // console.log(allCardsArray);
+  // console.log(allCardsArray.length);
+
+  // allCards.forEach(function() {
+  //   $0.remove();
+  // });
+//
+//   if (allCards != null) {
+//   for (let cardNum = 0; cardNum < 16; cardNum++) {
+//   this.remove();
+// }
+
+  //if removes all existing cards, in case of a restart
+  while (deckList.firstChild) {
+    deckList.removeChild(deckList.firstChild);
+  }
 
 
   // loop through each card and create its HTML
@@ -30,13 +59,7 @@ function createDeck() {
      newCard.appendChild(newIcon);
      deckList.appendChild(newCard);
 
-
    }
-
-  // add each card's HTML to the page
-  document.body.querySelector('.container').appendChild(deckList);
-
-
 
 }
 
@@ -72,6 +95,11 @@ function shuffle(array) {
 
 }
 
+const restartBtn = document.querySelector('.restart');
+restartBtn.addEventListener('click', function () {
+  console.log('The restart button was clicked!');
+  createDeck();
+  });
 
 
 
