@@ -27,19 +27,32 @@ function createDeck() {
 createDeck();
 
 // Shuffle function from http://stackoverflow.com/a/2450976
-function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+function shuffle() {
+
+  // access and store the children of the deckList in the DOM
+  const cardNodeList = document.querySelectorAll('.card');
+  // console.log(cardNodeList);
+
+  // convert NodeList to Array
+  let cardArray = [];
+  for(let i = cardNodeList.length; i--; cardArray.unshift(cardNodeList[i]));
+  console.log(cardArray);
+  // console.log(cardArray.length);
+
+  var currentIndex = cardArray.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
+        temporaryValue = cardArray[currentIndex];
+        cardArray[currentIndex] = cardArray[randomIndex];
+        cardArray[randomIndex] = temporaryValue;
     }
 
-    return array;
+    return cardArray;
 }
+
+shuffle();
 
 
 /*
