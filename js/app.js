@@ -1,7 +1,10 @@
 /*
  * Create a list that holds all of your cards
  */
+function createDeck() {
 
+  const deckList = document.createElement('ul');
+  deckList.className = 'deck';
 
 /*
  * Display the cards on the page
@@ -9,6 +12,19 @@
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
+
+  for (let cardNum = 0; cardNum < 16; cardNum++) {
+     const newCard = document.createElement('li');
+     newCard.className = 'card';
+
+     deckList.appendChild(newCard);
+   }
+
+   document.body.querySelector('.container').appendChild(deckList);
+
+}
+
+createDeck();
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
