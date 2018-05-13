@@ -4,7 +4,7 @@
 function createDeck() {
 
   const deckList = document.createElement('ul');
-  deckList.className = 'deck';
+  deckList.classList.add('deck');
 
 /*
  * Display the cards on the page
@@ -15,7 +15,7 @@ function createDeck() {
 
   for (let cardNum = 0; cardNum < 16; cardNum++) {
      const newCard = document.createElement('li');
-     newCard.className = 'card';
+     newCard.classList.add('card');
 
      deckList.appendChild(newCard);
    }
