@@ -114,8 +114,14 @@ restartBtn.addEventListener('click', function () {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
+var openCardFragment = document.createDocumentFragment();
+
  deckList.addEventListener('click', function(e) {
    if (e.target.className != 'deck' ) {
     e.target.classList.add('open');
+
+    var clonedCard = e.target.cloneNode();
+    openCardFragment.appendChild(clonedCard);
    }
- }, 'li');
+
+ }, );
