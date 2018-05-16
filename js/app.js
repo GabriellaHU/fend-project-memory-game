@@ -111,7 +111,7 @@ restartBtn.addEventListener('click', function () {
 
 
 /*
- * set up the event listener for a card. If a card is clicked:
+
  *  - display the card's symbol (put this functionality in another function that you call from this one)
  *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
  *  - if the list already has another card, check to see if the two cards match
@@ -121,14 +121,33 @@ restartBtn.addEventListener('click', function () {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-var openCardFragment = document.createDocumentFragment();
+const openCardFragment = document.createDocumentFragment();
 
  deckList.addEventListener('click', function(e) {
    if (e.target.className != 'deck' ) {
     e.target.classList.add('open');
 
-    var clonedCard = e.target.cloneNode();
+    let clonedCard = e.target.firstChild.cloneNode();
+
     openCardFragment.appendChild(clonedCard);
    }
 
- }, );
+   checkMatching();
+
+ });
+
+ function checkMatching() {
+   let checkedCards = openCardFragment.children;
+   if (checkedCards.length <= 1) {
+     console.log('open more cards!');
+   }
+   else if (checkedCards.length > 1 & checkedCards[0].className.toString() == checkedCards[1].className.toString()) {
+     console.log('same card');
+   }
+   else if (checkedCards.length > 1 & checkedCards[0].className.toString() != checkedCards[1].className.toString()) {
+     console.log('not the same');
+   }
+   else {
+      console.log('yay');
+   }
+ }
