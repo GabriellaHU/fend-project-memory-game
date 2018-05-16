@@ -95,10 +95,17 @@ function shuffle(array) {
 
 }
 
+function removeFragmentCards() {
+  while (openCardFragment.firstChild) {
+    openCardFragment.removeChild(openCardFragment.firstChild);
+  }
+}
+
 const restartBtn = document.querySelector('.restart');
 restartBtn.addEventListener('click', function () {
   console.log('The restart button was clicked!');
   createDeck();
+  removeFragmentCards();
   });
 
 
