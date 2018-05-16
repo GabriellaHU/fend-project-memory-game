@@ -46,7 +46,7 @@ function createDeck() {
   // loop through each card and create its HTML
   for (let cardNum = 0; cardNum < 16; cardNum++) {
      const newCard = document.createElement('li');
-     newCard.classList.add('card', 'match');
+     newCard.classList.add('card');
 
      // newCard.textContent = 'number' + (cardNum+1);
      const newIcon = document.createElement('i');
@@ -113,3 +113,9 @@ restartBtn.addEventListener('click', function () {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+ deckList.addEventListener('click', function(e) {
+   if (e.target.className != 'deck' ) {
+    e.target.classList.add('open');
+   }
+ }, 'li');
