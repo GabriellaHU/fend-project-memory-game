@@ -109,6 +109,7 @@ function removeFragmentCards() {
     openCardRemoval[1].classList.remove('open');
   };
 
+
 }
 
 const restartBtn = document.querySelector('.restart');
@@ -116,6 +117,7 @@ restartBtn.addEventListener('click', function () {
   console.log('The restart button was clicked!');
   createDeck();
   removeFragmentCards();
+  resetMoves();
   });
 
 
@@ -143,6 +145,12 @@ restartBtn.addEventListener('click', function () {
  function matchTimer() {
   window.setTimeout(matchCards, 1000);
   console.log('matchTimer started');
+}
+
+function messageTimer() {
+  console.log('messageTimer started');
+  window.setTimeout(scoreMessage, 1000);
+  window.setTimeout(resetMoves, 1000);
 }
 
  function turnBackCards() {
@@ -176,6 +184,7 @@ restartBtn.addEventListener('click', function () {
   }
 
   removeFragmentCards();
+  countScore();
 
  };
 
@@ -219,9 +228,40 @@ moveCounter.textContent = 0;
 
 function increaseCounter() {
   moveNum++;
-  console.log(moveNum);
   moveCounter.textContent = moveNum;
 };
 
 
 // + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
+
+let scoreNum = 0;
+
+function countScore() {
+  scoreNum++;
+
+  if (scoreNum === 8) {
+    messageTimer();
+  }
+
+};
+
+function scoreMessage() {
+
+  if (moveNum <=25) {
+      window.alert('Congratulations! You have solved the game in ' + moveNum + ' moves. You are a real pro!');
+    }
+  else if (25 < moveNum & moveNum <= 45) {
+      window.alert('Congratulations! You have solved the game in ' + moveNum + ' moves. Well done!');
+    }
+
+  else {
+      window.alert('You have solved the game in ' + moveNum + ' moves. Dont worry, practice makes perfect');
+   }
+
+}
+
+function resetMoves() {
+  scoreNum = 0;
+  moveNum = 0;
+  moveCounter.textContent = moveNum;
+};
