@@ -23,23 +23,60 @@ body {
 
 .container {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    align-items: flex-start;
+    max-width: 660px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.header {
+  flex-basis: 100%;
 }
 
 h1 {
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
+    text-align: center;
 }
+
+/*
+ * Styles for the Score Panel
+ */
+
+.score-panel {
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+    margin: 0 20px 10px 20px;
+    flex-basis: 100%;
+}
+
+.stars {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    margin: 0 5px 0 0;
+}
+
+.stars li {
+    list-style: none;
+    display: inline-block;
+}
+
+.restart {
+    float: right;
+    cursor: pointer;
+
+}
+
 
 /*
  * Styles for the deck of cards
  */
 
 .deck {
-    width: 660px;
-    min-height: 680px;
     background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
     padding: 32px;
     border-radius: 10px;
@@ -47,13 +84,14 @@ h1 {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    align-items: center;
-    margin: 0 0 3em;
+    height: 660px;
+    flex-basis: 100%;
 }
 
 .card {
+    flex-basis: 125px;
     height: 125px;
-    width: 125px;
+    margin-bottom: 32px;
     background: #2e3d49;
     font-size: 0;
     color: #ffffff;
@@ -77,43 +115,65 @@ h1 {
     cursor: default;
     font-size: 33px;
     background-color: #02ccba;
-      -webkit-transition: background-color 100ms ease-in;
-      -ms-transition: background-color 100ms ease-in;
-      transition: background-color 100ms ease-in;
+    -webkit-transition: background-color 100ms ease-in;
+    -ms-transition: background-color 100ms ease-in;
+    transition: background-color 100ms ease-in;
 
 }
 
 .nomatch {
-  background-color: #AD310B;
-  -webkit-transition: background-color 100ms ease-in;
-  -ms-transition: background-color 100ms ease-in;
-  transition: background-color 100ms ease-in;
+    background-color: #AD310B;
+    -webkit-transition: background-color 100ms ease-in;
+    -ms-transition: background-color 100ms ease-in;
+    transition: background-color 100ms ease-in;
 }
 
 /*
- * Styles for the Score Panel
- */
+media-queries
+*/
 
-.score-panel {
-    text-align: left;
-    width: 345px;
-    margin-bottom: 10px;
+@media screen and (max-width: 660px) {
+
+  .container {
+    max-width: 525px;
+  }
+  .deck {
+      padding: 25px;
+      height: 525px;
+      flex-basis: 525px;
+  }
+
+  .card {
+      flex-basis: 100px;
+      height: 100px;
+      margin-bottom: 25px;
+  }
+
+  .score-panel {
+    font-size: 1.2em;
+  }
+
 }
 
 
-.stars {
-    margin: 0;
-    padding: 0;
-    display: inline-block;
-    margin: 0 5px 0 0;
-}
+@media screen and (max-width: 525px) {
 
-.stars li {
-    list-style: none;
-    display: inline-block;
-}
+  .container {
+    max-width: 372px;
+  }
+  .deck {
+    min-width: 372px;
+    width: 372px;
+    padding: 20px;
+    height: 372px;
+    flex-basis: 372px;
+  }
 
-.restart {
-    float: right;
-    cursor: pointer;
+  .header h1,
+  .card {
+    flex-basis: 70px;
+    height: 70px;
+    margin-bottom: 20px;
+  }
+
 }
