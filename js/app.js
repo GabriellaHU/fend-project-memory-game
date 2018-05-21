@@ -196,7 +196,7 @@ restartBtn.addEventListener('click', function () {
 
   }
 
-  else if (checkedCards.length > 1 & checkedCards[0].className.toString() !== checkedCards[1].className.toString()) {
+  else {
     console.log('not the same');
 
     deckList.style = 'pointer-events: none';
@@ -209,9 +209,6 @@ restartBtn.addEventListener('click', function () {
     // }
   }
 
-  else {
-     console.log('yay');
-  }
  }
 
 // + increment the move counter and display it on the page
