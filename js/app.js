@@ -189,45 +189,33 @@ restartBtn.addEventListener('click', function () {
 
  function checkMatching() {
    let checkedCards = openCardFragment.children;
-   let firstCardClass = checkedCards[0].className.toString();
 
    if (checkedCards.length <= 1) {
      console.log('open more cards!');
    }
-   else if (checkedCards.length > 1 & firstCardClass == checkedCards[1].className.toString()) {
-    console.log('same card');
-
-    let matchedSymbol = checkedCards[1].classList[1];
-    console.log(matchedSymbol);
-
-    let fixedSymbol = document.querySelectorAll('matchedSymbol');
-    console.log(fixedSymbol);
-    fixedSymbol[0].classList.add('match');
-    fixedSymbol[1].classList.add('match');
+   else if (checkedCards.length > 1 & checkedCards[0].className.toString() === checkedCards[1].className.toString()) {
+  console.log('same card');
 
     deckList.style = 'pointer-events: none';
 
     matchTimer();
 
-     //
-     // while (checkedCards.firstChild) {
-     //   checkedCards.removeChild(checkedCards.firstChild);
-     // }
+  }
 
-   }
-   else if (checkedCards.length > 1 & firstCardClass != checkedCards[1].className.toString()) {
-     console.log('not the same');
+  else if (checkedCards.length > 1 & checkedCards[0].className.toString() !== checkedCards[1].className.toString()) {
+    console.log('not the same');
 
-     deckList.style = 'pointer-events: none';
+    deckList.style = 'pointer-events: none';
 
-     Timer();
+    Timer();
 
 
-     // while (checkedCards.firstChild) {
-     //   checkedCards.removeChild(checkedCards.firstChild);
-     // }
-   }
-   else {
-      console.log('yay');
-   }
+    // while (checkedCards.firstChild) {
+    //   checkedCards.removeChild(checkedCards.firstChild);
+    // }
+  }
+
+  else {
+     console.log('yay');
+  }
  }
