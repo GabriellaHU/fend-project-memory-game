@@ -1,80 +1,51 @@
-// new array to hold all card icon classes
+// ------------------------------------------------------------
+// ------------------- CREATE STARTER DECK --------------------
+// ------------------------------------------------------------
+
+// new array that holds all symbol classes
 // TODO get rid off duplications
 const cardIconClasses = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-bomb', 'fa-leaf', 'fa-bicycle', 'fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-bomb', 'fa-leaf', 'fa-bicycle']
 
-// shuffle the array of card icons using the provided "shuffle" method
-
-// * Create a list that holds all of my cards
-let deckList = document.createElement('ul');
+// * new list that holds all cards
+const deckList = document.createElement('ul');
 deckList.classList.add('deck');
-
 document.body.querySelector('.container').appendChild(deckList);
+
+// function that shuffles the starter cards
+// called by default + by the restart button
+createDeck();
 
 function createDeck() {
 
-  shuffle(cardIconClasses);
-
-  // let cardList = document.querySelector('.card');
-  // if (cardList != null) {
-  // cardList.remove();
-  // }
-  //
-  // let allCards = document.querySelectorAll('.card');
-  // console.log(allCards);
-
-  // convert NodeList to Array
-  //let allCardsArray = [];
-  // for(let i = allCards.length; i--; allCardsArray.unshift(allCards[i]));
-  // console.log(allCardsArray);
-  // console.log(allCardsArray.length);
-
-  // allCards.forEach(function() {
-  //   $0.remove();
-  // });
-//
-//   if (allCards != null) {
-//   for (let cardNum = 0; cardNum < 16; cardNum++) {
-//   this.remove();
-// }
-
-  //if removes all existing cards, in case of a restart
+  //removes all existing cards - in case there is any
   while (deckList.firstChild) {
     deckList.removeChild(deckList.firstChild);
   }
 
+  // shuffles the array of card icons using the provided "shuffle" method
+  shuffle(cardIconClasses);
 
-  // loop through each card and create its HTML
+  // loops through each card and creates its HTML
   for (let cardNum = 0; cardNum < 16; cardNum++) {
+
      const newCard = document.createElement('li');
-     newCard.classList.add('card', 'animated');
-
-     // newCard.textContent = 'number' + (cardNum+1);
      const newIcon = document.createElement('i');
-     // newIcon.insertAdjacentText('afterbegin', (cardNum+1));
-
+     // the iconNum variable stores the random classname from the shuffled array
      const iconNum = cardIconClasses[cardNum];
-     // console.log(iconNum);
+
+     newCard.classList.add('card', 'animated');
+     // the new card symbol gets the stored classname
      newIcon.classList.add('fa', iconNum);
 
      newCard.appendChild(newIcon);
      deckList.appendChild(newCard);
 
    }
-
 }
-
-createDeck();
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
 
-  // access and store the children of the deckList in the DOM
-  // let cardNodeList = document.querySelectorAll('.card');
-
-  // convert NodeList to Array
-  // let cardArray = [];
-  // for(let i = cardNodeList.length; i--; cardArray.unshift(cardNodeList[i]));
-  //
   let currentIndex = array.length, temporaryValue, randomIndex;
 
   while (currentIndex !== 0) {
@@ -87,77 +58,119 @@ function shuffle(array) {
 
   return array;
 
-  // document.body.querySelector('.container').querySelector('.deck').removeChildren();
-
-  // for (let newCardNum = 0; newCardNum < 16; newCardNum++) {
-  //    deckList.appendChild(cardNodeList[newCardNum]);
-  // }
-
 }
 
 
+
+// ------------------------------------------------------------
+// ---------------------- RESTART BUTTON ----------------------
+// ------------------------------------------------------------
+
 const restartBtn = document.querySelector('.restart');
 restartBtn.addEventListener('click', function () {
-  console.log('The restart button was clicked!');
+  // console.log('The restart button was clicked!');
   createDeck();
   removeFragmentCards();
   resetMoves();
   });
 
 
- const openCardFragment = document.createDocumentFragment();
 
-  deckList.addEventListener('click', inspectCard);
 
- function inspectCard(e) {
+// ------------------------------------------------------------
+// --------------- INSPECTON OF THE OPEN CARDS ----------------
+// ------------------------------------------------------------
 
+// a fragment that stores the currently open 1 or 2 cards
+const openCardFragment = document.createDocumentFragment();
+
+// a function that copies the open cards to the fragment
+deckList.addEventListener('click', inspectCard);
+
+
+function inspectCard(e) {
+    // the deck doesn't get the card classname, just the cards
    if (e.target.className != 'deck' ) {
-    e.target.classList.add('open');
-    let clonedCard = e.target.firstChild.cloneNode();
-    openCardFragment.appendChild(clonedCard);
-  };
-
+     e.target.classList.add('open');
+     let clonedCard = e.target.firstChild.cloneNode();
+     openCardFragment.appendChild(clonedCard);
+   };
    checkMatching();
-
  };
 
- function Timer() {
+
+// compares the open cards based on the information stored in the fragment
+ function checkMatching() {
+
+   const checkedCards = openCardFragment.children;
+
+   // TODO figure out how to remove the unnecessary if conditon without causing errors
+   if (checkedCards.length <= 1) {
+     // console.log('open more cards!');
+   }
+
+   else if (checkedCards.length > 1 & checkedCards[0].className.toString() === checkedCards[1].className.toString()) {
+     // console.log('same card');
+    deckList.style = 'pointer-events: none';
+    increaseCounter();
+    matchTimer();
+  }
+
+  else {
+    // console.log('not the same');
+    deckList.style = 'pointer-events: none';
+    increaseCounter();
+    noMatchTimer();
+  }
+}
+
+
+
+// ------------------------------------------------------------
+// -------------------- DELAYING OUTCOMES ---------------------
+// ------------------------------------------------------------
+
+function matchTimer() {
+ window.setTimeout(matchCards, 1000);
+ // console.log('matchTimer started');
+ animateMatch();
+}
+
+ function noMatchTimer() {
    window.setTimeout(turnBackCards, 1500);
-   console.log('Timer started');
+   // console.log('Timer started');
    animateNoMatch();
-
- }
-
- function matchTimer() {
-  window.setTimeout(matchCards, 1000);
-  console.log('matchTimer started');
-  animateMatch();
-
 }
 
 function messageTimer() {
-  console.log('messageTimer started');
+  // console.log('messageTimer started');
   window.setTimeout(scoreMessage, 1000);
 }
 
- function turnBackCards() {
+// ------------------------------------------------------------
+// ------------------- MATCHING ANIMATION ---------------------
+// ------------------------------------------------------------
 
-   console.log('cards turned back');
-   removeFragmentCards();
+function animateMatch() {
+  const animCards = deckList.querySelectorAll('.open');
 
-   let noMatchCard = document.querySelectorAll('.nomatch');
+  animCards[0].classList.add('pulse', 'match');
+  animCards[1].classList.add('pulse', 'match');
+}
 
-   noMatchCard[0].classList.remove('wobble', 'nomatch');
-   noMatchCard[1].classList.remove('wobble', 'nomatch');
+function animateNoMatch() {
+  const animatedSymbol = document.querySelectorAll('.open');
+
+  animatedSymbol[0].classList.add('wobble', 'nomatch');
+  animatedSymbol[1].classList.add('wobble', 'nomatch');
+}
 
 
-   deckList.style = 'pointer-events: auto';
-
- }
+// ------------------------------------------------------------
+// -------------------- MATCHING OUTCOMES ---------------------
+// ------------------------------------------------------------
 
  function matchCards() {
-   //
-   // let checkedCards = openCardFragment.children;
 
    let matchedCards = deckList.querySelectorAll('.open');
 
@@ -166,120 +179,47 @@ function messageTimer() {
 
    deckList.style = 'pointer-events: auto';
 
-
-   // matchedCards[0].style = 'pointer-events: none';
-   // matchedCards[1].style = 'pointer-events: none';
-
-   // let matchedSymbol = checkedCards[1].classList[1];
-   //
-   // let finalSymbol = deckList.querySelectorAll('.' + CSS.escape(matchedSymbol));
-
-   // finalSymbol[0].parentNode.classList.remove('open', 'pulse');
-   // finalSymbol[0].parentNode.classList.add('match');
-   // finalSymbol[1].parentNode.classList.remove('open', 'pulse');
-   // finalSymbol[1].parentNode.classList.add('match');
-   //
-   // finalSymbol[0].parentNode.style = 'pointer-events: none';
-   // finalSymbol[1].parentNode.style = 'pointer-events: none';
-
-   // deckList.style = 'pointer-events: auto';
-  //
-  // while (checkedCards.firstChild) {
-  //   checkedCards.removeChild(checkedCards.firstChild);}
-
   removeFragmentCards();
   countScore();
 
  };
 
-function animateMatch() {
+ function turnBackCards() {
 
-  let animCards = deckList.querySelectorAll('.open');
+  let noMatchCards = document.querySelectorAll('.nomatch');
 
-  animCards[0].classList.add('pulse', 'match');
-  animCards[1].classList.add('pulse', 'match');
+    noMatchCards[0].classList.remove('wobble', 'nomatch');
+    noMatchCards[1].classList.remove('wobble', 'nomatch');
+
+    deckList.style = 'pointer-events: auto';
+
+  removeFragmentCards();
+
 }
 
-function animateNoMatch() {
-
-  let animatedSymbol = document.querySelectorAll('.open');
-
-  animatedSymbol[0].classList.add('wobble', 'nomatch');
-  animatedSymbol[1].classList.add('wobble', 'nomatch');
-}
-
- function checkMatching() {
-   let checkedCards = openCardFragment.children;
 
 
-
-   if (checkedCards.length <= 1) {
-     console.log('open more cards!');
-   }
-   else if (checkedCards.length > 1 & checkedCards[0].className.toString() === checkedCards[1].className.toString()) {
-  console.log('same card');
-
-    deckList.style = 'pointer-events: none';
-    increaseCounter();
-    matchTimer();
-
-  }
-
-  else {
-    console.log('not the same');
-
-    deckList.style = 'pointer-events: none';
-    increaseCounter();
-    Timer();
-
-
-    // while (checkedCards.firstChild) {
-    //   checkedCards.removeChild(checkedCards.firstChild);
-    // }
-  }
-
- }
-
- function removeFragmentCards() {
-   while (openCardFragment.firstChild) {
-     openCardFragment.removeChild(openCardFragment.firstChild);
-   }
-
-   // remove matched cards from the fragment
-   let openCardRemoval = document.querySelectorAll('.open');
-   //
-   if (openCardRemoval[0]) {
-  openCardRemoval[0].classList.remove('open');
-  }
-  if (openCardRemoval[1]) {
- openCardRemoval[1].classList.remove('open');
- }
-
- }
-
-// + increment the move counter and display it on the page
+// ------------------------------------------------------------
+// ----------------------- COUNT MOVES ------------------------
+// ------------------------------------------------------------
 
 let moveNum = 0;
-let moveCounter = document.querySelector('.moves');
-moveCounter.textContent = 0;
+let scoreNum = 0;
+
+const moveCounter = document.querySelector('.moves');
+moveCounter.textContent = moveNum;
 
 function increaseCounter() {
   moveNum++;
   moveCounter.textContent = moveNum;
 };
 
-
-// + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
-
-let scoreNum = 0;
-
+// if all cards have matched, display a message
 function countScore() {
   scoreNum++;
-
   if (scoreNum === 8) {
     messageTimer();
-  }
-
+    }
 };
 
 function scoreMessage() {
@@ -295,9 +235,32 @@ function scoreMessage() {
       window.alert('You have solved the game in ' + moveNum + ' moves. Dont worry, practice makes perfect');
    }
 
-   resetMoves();
-   removeFragmentCards();
    createDeck();
+   removeFragmentCards();
+   resetMoves();
+}
+
+// ------------------------------------------------------------
+// ----------- REMOVE OPEN CARDS & RESET VALUES ---------------
+// ------------------------------------------------------------
+
+
+function removeFragmentCards() {
+
+   // remove cloned cards from the fragment
+   while (openCardFragment.firstChild) {
+     openCardFragment.removeChild(openCardFragment.firstChild);
+   }
+
+   // remove all open classes
+   let openCardRemoval = document.querySelectorAll('.open');
+   //
+   if (openCardRemoval[0]) {
+     openCardRemoval[0].classList.remove('open');
+    }
+   if (openCardRemoval[1]) {
+    openCardRemoval[1].classList.remove('open');
+  }
 
 }
 
