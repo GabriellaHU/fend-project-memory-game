@@ -46,7 +46,7 @@ function createDeck() {
   // loop through each card and create its HTML
   for (let cardNum = 0; cardNum < 16; cardNum++) {
      const newCard = document.createElement('li');
-     newCard.classList.add('card');
+     newCard.classList.add('card', 'animated');
 
      // newCard.textContent = 'number' + (cardNum+1);
      const newIcon = document.createElement('i');
@@ -95,22 +95,6 @@ function shuffle(array) {
 
 }
 
-function removeFragmentCards() {
-  while (openCardFragment.firstChild) {
-    openCardFragment.removeChild(openCardFragment.firstChild);
-  }
-
-  // remove matched cards from the fragment
-  let openCardRemoval = document.querySelectorAll('.open');
-  if (openCardRemoval[0]) {
-    openCardRemoval[0].classList.remove('open');
-  };
-  if (openCardRemoval[1]) {
-    openCardRemoval[1].classList.remove('open');
-  };
-
-
-}
 
 const restartBtn = document.querySelector('.restart');
 restartBtn.addEventListener('click', function () {
@@ -138,55 +122,91 @@ restartBtn.addEventListener('click', function () {
  };
 
  function Timer() {
-   window.setTimeout(turnBackCards, 1000);
+   window.setTimeout(turnBackCards, 1500);
    console.log('Timer started');
+   animateNoMatch();
+
  }
 
  function matchTimer() {
   window.setTimeout(matchCards, 1000);
   console.log('matchTimer started');
+  animateMatch();
+
 }
 
 function messageTimer() {
   console.log('messageTimer started');
   window.setTimeout(scoreMessage, 1000);
-  window.setTimeout(resetMoves, 1000);
 }
 
  function turnBackCards() {
 
    console.log('cards turned back');
    removeFragmentCards();
+
+   let noMatchCard = document.querySelectorAll('.nomatch');
+
+   noMatchCard[0].classList.remove('wobble', 'nomatch');
+   noMatchCard[1].classList.remove('wobble', 'nomatch');
+
+
    deckList.style = 'pointer-events: auto';
 
  }
 
  function matchCards() {
+   //
+   // let checkedCards = openCardFragment.children;
 
-   let checkedCards = openCardFragment.children;
+   let matchedCards = deckList.querySelectorAll('.open');
 
-   let matchedSymbol = checkedCards[1].classList[1];
-
-   let finalSymbol = deckList.querySelectorAll('.' + CSS.escape(matchedSymbol));
-
-
-   finalSymbol[0].parentNode.classList.replace('open', 'match');
-   finalSymbol[1].parentNode.classList.replace('open', 'match');
-
-   finalSymbol[0].parentNode.style = 'pointer-events: none';
-   finalSymbol[1].parentNode.style = 'pointer-events: none';
+   matchedCards[0].classList.remove('pulse');
+   matchedCards[1].classList.remove('pulse');
 
    deckList.style = 'pointer-events: auto';
 
 
-  while (checkedCards.firstChild) {
-    checkedCards.removeChild(checkedCards.firstChild);
-  }
+   // matchedCards[0].style = 'pointer-events: none';
+   // matchedCards[1].style = 'pointer-events: none';
+
+   // let matchedSymbol = checkedCards[1].classList[1];
+   //
+   // let finalSymbol = deckList.querySelectorAll('.' + CSS.escape(matchedSymbol));
+
+   // finalSymbol[0].parentNode.classList.remove('open', 'pulse');
+   // finalSymbol[0].parentNode.classList.add('match');
+   // finalSymbol[1].parentNode.classList.remove('open', 'pulse');
+   // finalSymbol[1].parentNode.classList.add('match');
+   //
+   // finalSymbol[0].parentNode.style = 'pointer-events: none';
+   // finalSymbol[1].parentNode.style = 'pointer-events: none';
+
+   // deckList.style = 'pointer-events: auto';
+  //
+  // while (checkedCards.firstChild) {
+  //   checkedCards.removeChild(checkedCards.firstChild);}
 
   removeFragmentCards();
   countScore();
 
  };
+
+function animateMatch() {
+
+  let animCards = deckList.querySelectorAll('.open');
+
+  animCards[0].classList.add('pulse', 'match');
+  animCards[1].classList.add('pulse', 'match');
+}
+
+function animateNoMatch() {
+
+  let animatedSymbol = document.querySelectorAll('.open');
+
+  animatedSymbol[0].classList.add('wobble', 'nomatch');
+  animatedSymbol[1].classList.add('wobble', 'nomatch');
+}
 
  function checkMatching() {
    let checkedCards = openCardFragment.children;
@@ -217,6 +237,23 @@ function messageTimer() {
     //   checkedCards.removeChild(checkedCards.firstChild);
     // }
   }
+
+ }
+
+ function removeFragmentCards() {
+   while (openCardFragment.firstChild) {
+     openCardFragment.removeChild(openCardFragment.firstChild);
+   }
+
+   // remove matched cards from the fragment
+   let openCardRemoval = document.querySelectorAll('.open');
+   //
+   if (openCardRemoval[0]) {
+  openCardRemoval[0].classList.remove('open');
+  }
+  if (openCardRemoval[1]) {
+ openCardRemoval[1].classList.remove('open');
+ }
 
  }
 
@@ -257,6 +294,10 @@ function scoreMessage() {
   else {
       window.alert('You have solved the game in ' + moveNum + ' moves. Dont worry, practice makes perfect');
    }
+
+   resetMoves();
+   removeFragmentCards();
+   createDeck();
 
 }
 

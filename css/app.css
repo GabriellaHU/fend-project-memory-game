@@ -72,14 +72,22 @@ h1 {
     font-size: 33px;
 }
 
-.show {
+.match {
+    transform: rotateY(0);
+    cursor: default;
     font-size: 33px;
+    background-color: #02ccba;
+      -webkit-transition: background-color 100ms ease-in;
+      -ms-transition: background-color 100ms ease-in;
+      transition: background-color 100ms ease-in;
+
 }
 
-.match {
-    cursor: default;
-    background: #02ccba;
-    font-size: 33px;
+.nomatch {
+  background-color: #AD310B;
+  -webkit-transition: background-color 100ms ease-in;
+  -ms-transition: background-color 100ms ease-in;
+  transition: background-color 100ms ease-in;
 }
 
 /*
