@@ -127,20 +127,21 @@ restartBtn.addEventListener('click', function () {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-const openCardFragment = document.createDocumentFragment();
+ const openCardFragment = document.createDocumentFragment();
 
- deckList.addEventListener('click', function(e) {
+  deckList.addEventListener('click', inspectCard);
+
+ function inspectCard(e) {
+
    if (e.target.className != 'deck' ) {
     e.target.classList.add('open');
-
     let clonedCard = e.target.firstChild.cloneNode();
-
     openCardFragment.appendChild(clonedCard);
-   }
+  };
 
    checkMatching();
 
- });
+ };
 
  function Timer() {
    window.setTimeout(turnBackCards, 1000);
