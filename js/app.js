@@ -148,6 +148,11 @@ restartBtn.addEventListener('click', function () {
    console.log('Timer started');
  }
 
+ function matchTimer() {
+  window.setTimeout(matchCards, 1000);
+  console.log('matchTimer started');
+}
+
  function turnBackCards() {
 
    console.log('cards turned back');
@@ -171,6 +176,8 @@ restartBtn.addEventListener('click', function () {
     console.log(fixedSymbol);
     fixedSymbol[0].classList.add('match');
     fixedSymbol[1].classList.add('match');
+
+    matchTimer();
 
      //
      // while (checkedCards.firstChild) {
