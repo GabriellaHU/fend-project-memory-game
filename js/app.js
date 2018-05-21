@@ -158,8 +158,34 @@ restartBtn.addEventListener('click', function () {
    console.log('cards turned back');
    removeFragmentCards();
    deckList.style = 'pointer-events: auto';
-   
+
  }
+
+ function matchCards() {
+
+   let checkedCards = openCardFragment.children;
+
+   let matchedSymbol = checkedCards[1].classList[1];
+
+   let finalSymbol = deckList.querySelectorAll('.' + CSS.escape(matchedSymbol));
+
+
+   finalSymbol[0].parentNode.classList.replace('open', 'match');
+   finalSymbol[1].parentNode.classList.replace('open', 'match');
+
+   finalSymbol[0].parentNode.style = 'pointer-events: none';
+   finalSymbol[1].parentNode.style = 'pointer-events: none';
+
+   deckList.style = 'pointer-events: auto';
+
+
+  while (checkedCards.firstChild) {
+    checkedCards.removeChild(checkedCards.firstChild);
+  }
+
+  removeFragmentCards();
+
+ };
 
  function checkMatching() {
    let checkedCards = openCardFragment.children;
