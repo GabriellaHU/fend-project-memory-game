@@ -157,6 +157,8 @@ restartBtn.addEventListener('click', function () {
 
    console.log('cards turned back');
    removeFragmentCards();
+   deckList.style = 'pointer-events: auto';
+   
  }
 
  function checkMatching() {
@@ -177,6 +179,8 @@ restartBtn.addEventListener('click', function () {
     fixedSymbol[0].classList.add('match');
     fixedSymbol[1].classList.add('match');
 
+    deckList.style = 'pointer-events: none';
+
     matchTimer();
 
      //
@@ -187,6 +191,9 @@ restartBtn.addEventListener('click', function () {
    }
    else if (checkedCards.length > 1 & firstCardClass != checkedCards[1].className.toString()) {
      console.log('not the same');
+
+     deckList.style = 'pointer-events: none';
+
      Timer();
 
 
