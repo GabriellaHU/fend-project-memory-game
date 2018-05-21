@@ -119,14 +119,6 @@ restartBtn.addEventListener('click', function () {
   });
 
 
-
-/*
-
-
-  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
-
  const openCardFragment = document.createDocumentFragment();
 
   deckList.addEventListener('click', inspectCard);
@@ -190,6 +182,8 @@ restartBtn.addEventListener('click', function () {
  function checkMatching() {
    let checkedCards = openCardFragment.children;
 
+
+
    if (checkedCards.length <= 1) {
      console.log('open more cards!');
    }
@@ -197,7 +191,7 @@ restartBtn.addEventListener('click', function () {
   console.log('same card');
 
     deckList.style = 'pointer-events: none';
-
+    increaseCounter();
     matchTimer();
 
   }
@@ -206,7 +200,7 @@ restartBtn.addEventListener('click', function () {
     console.log('not the same');
 
     deckList.style = 'pointer-events: none';
-
+    increaseCounter();
     Timer();
 
 
@@ -219,3 +213,18 @@ restartBtn.addEventListener('click', function () {
      console.log('yay');
   }
  }
+
+// + increment the move counter and display it on the page
+
+let moveNum = 0;
+let moveCounter = document.querySelector('.moves');
+moveCounter.textContent = 0;
+
+function increaseCounter() {
+  moveNum++;
+  console.log(moveNum);
+  moveCounter.textContent = moveNum;
+};
+
+
+// + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
