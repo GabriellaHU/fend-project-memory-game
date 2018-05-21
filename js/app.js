@@ -99,9 +99,16 @@ function removeFragmentCards() {
   while (openCardFragment.firstChild) {
     openCardFragment.removeChild(openCardFragment.firstChild);
   }
-  var openCardRemoval = document.querySelectorAll('.open');
-  openCardRemoval[0].classList.remove('open');
-  openCardRemoval[1].classList.remove('open');
+
+  // remove matched cards from the fragment
+  let openCardRemoval = document.querySelectorAll('.open');
+  if (openCardRemoval[0]) {
+    openCardRemoval[0].classList.remove('open');
+  };
+  if (openCardRemoval[1]) {
+    openCardRemoval[1].classList.remove('open');
+  };
+
 }
 
 const restartBtn = document.querySelector('.restart');
@@ -136,7 +143,7 @@ const openCardFragment = document.createDocumentFragment();
  });
 
  function Timer() {
-   window.setTimeout(turnBackCards, 2000);
+   window.setTimeout(turnBackCards, 1000);
    console.log('Timer started');
  }
 
@@ -148,15 +155,36 @@ const openCardFragment = document.createDocumentFragment();
 
  function checkMatching() {
    let checkedCards = openCardFragment.children;
+   let firstCardClass = checkedCards[0].className.toString();
+
    if (checkedCards.length <= 1) {
      console.log('open more cards!');
    }
-   else if (checkedCards.length > 1 & checkedCards[0].className.toString() == checkedCards[1].className.toString()) {
-     console.log('same card');
+   else if (checkedCards.length > 1 & firstCardClass == checkedCards[1].className.toString()) {
+    console.log('same card');
+
+    let matchedSymbol = checkedCards[1].classList[1];
+    console.log(matchedSymbol);
+
+    let fixedSymbol = document.querySelectorAll('matchedSymbol');
+    console.log(fixedSymbol);
+    fixedSymbol[0].classList.add('match');
+    fixedSymbol[1].classList.add('match');
+
+     //
+     // while (checkedCards.firstChild) {
+     //   checkedCards.removeChild(checkedCards.firstChild);
+     // }
+
    }
-   else if (checkedCards.length > 1 & checkedCards[0].className.toString() != checkedCards[1].className.toString()) {
+   else if (checkedCards.length > 1 & firstCardClass != checkedCards[1].className.toString()) {
      console.log('not the same');
      Timer();
+
+
+     // while (checkedCards.firstChild) {
+     //   checkedCards.removeChild(checkedCards.firstChild);
+     // }
    }
    else {
       console.log('yay');
