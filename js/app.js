@@ -12,9 +12,10 @@ const deckList = document.createElement('ul');
 deckList.classList.add('deck');
 document.body.querySelector('.container').appendChild(deckList);
 
-// function that shuffles the starter cards
+//create the deck of cards
 // called by default + by the restart button
 createDeck();
+
 
 function createDeck() {
 
@@ -43,7 +44,7 @@ function createDeck() {
      deckList.appendChild(newCard);
 
    }
-}
+};
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -220,6 +221,9 @@ moveCounter.textContent = moveNum;
 function increaseCounter() {
   moveNum++;
   moveCounter.textContent = moveNum;
+  if (moveNum === 15 || moveNum === 25) {
+    decreaseRating();
+  }
 };
 
 // if all cards have been matched, display a message
@@ -249,6 +253,28 @@ function scoreMessage() {
    stopWatch();
 }
 
+
+
+// ------------------------------------------------------------
+// ---------------------- DISPLAY RATING ----------------------
+// ------------------------------------------------------------
+
+let rating = 3;
+const stars = document.querySelectorAll('.stars > li > i');
+
+function decreaseRating() {
+
+   rating--;
+
+   if (rating === 2) {
+     stars[2].classList.add('inactive');
+   };
+
+   if (rating === 1) {
+     stars[1].classList.add('inactive');
+   };
+
+};
 
 
 // ------------------------------------------------------------
