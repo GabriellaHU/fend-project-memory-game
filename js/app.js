@@ -77,7 +77,6 @@ restartBtn.addEventListener('click', function () {
 
 
 
-
 // ------------------------------------------------------------
 // --------------- INSPECTON OF THE OPEN CARDS ----------------
 // ------------------------------------------------------------
@@ -90,7 +89,7 @@ deckList.addEventListener('click', inspectCard);
 
 
 function inspectCard(e) {
-    // the deck doesn't get the card classname, just the cards
+    // the deck shouldn't get the card classname
    if (e.target.className != 'deck' ) {
      e.target.classList.add('open');
      let clonedCard = e.target.firstChild.cloneNode();
@@ -105,19 +104,14 @@ function inspectCard(e) {
 
    const checkedCards = openCardFragment.children;
 
-   // TODO figure out how to remove the unnecessary if conditon without causing errors
-   if (checkedCards.length <= 1) {
-     // console.log('open more cards!');
-   }
-
-   else if (checkedCards.length > 1 & checkedCards[0].className.toString() === checkedCards[1].className.toString()) {
+   if (checkedCards.length > 1 && checkedCards[0].className.toString() === checkedCards[1].className.toString()) {
      // console.log('same card');
     deckList.style = 'pointer-events: none';
     increaseCounter();
     matchTimer();
   }
 
-  else {
+  else if (checkedCards.length > 1 && checkedCards[0].className.toString() != checkedCards[1].className.toString()) {
     // console.log('not the same');
     deckList.style = 'pointer-events: none';
     increaseCounter();
