@@ -3,10 +3,11 @@
 // ------------------------------------------------------------
 
 // new array that holds all symbol classes
-// TODO get rid off duplications
-const cardIconClasses = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-bomb', 'fa-leaf', 'fa-bicycle', 'fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-bomb', 'fa-leaf', 'fa-bicycle']
+// eliminate duplications from the array by using the spread syntax
+const IconClasses = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-bomb', 'fa-leaf', 'fa-bicycle'];
+const cardIconClasses = [...IconClasses, ...IconClasses];
 
-// * new list that holds all cards
+// add new list element that holds all cards
 const deckList = document.createElement('ul');
 deckList.classList.add('deck');
 document.body.querySelector('.container').appendChild(deckList);
