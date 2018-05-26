@@ -65,10 +65,17 @@ h1 {
     display: inline-block;
 }
 
+.scores{
+  flex-basis: 120px;
+}
+
+.timer{
+  flex-basis: 100px;
+}
+
 .restart {
     float: right;
     cursor: pointer;
-
 }
 
 

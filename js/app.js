@@ -256,6 +256,9 @@ function scoreMessage() {
 // ------------------------------------------------------------
 // code based on https://www.ostraining.com/blog/coding/stopwatch/
 
+let gameTime = document.querySelector('.gametime');
+gameTime.innerHTML = 'Time 00 : 00';
+
 let getSecs;
 let getMins;
 
@@ -274,16 +277,17 @@ function startWatch() {
    /* check if seconds is equal to 60 and add a +1 to minutes, and set seconds to 0 */
    if (seconds === 60) {
      seconds = 0;
-     minutes = minutes + 1;
+     minutes++;
    };
 
    /* use javascript ternary operator to format how the minutes look and add 0 to minutes if less than 10 */
    getMins = (minutes < 10) ? (`0${minutes} : `) : (`${minutes} : `);
    getSecs = (seconds < 10) ? (`0${seconds}`) : (`${seconds}`);
 
-   // display the stopwatch
+  // count second
    seconds++;
-   console.log('Time: ' + getMins + getSecs);
+  // display the stopwatch / timer
+   gameTime.innerHTML = 'Time ' + getMins + getSecs;
 
    /* call the setTimeout() to keep the stop watch alive ! */
    clearTime = setTimeout('startWatch()', 1000);
@@ -306,6 +310,7 @@ function startWatch() {
  function resetTime() {
    seconds = 0;
    minutes = 0;
+   gameTime.innerHTML = 'Time 00 : 00';
  }
 
 
