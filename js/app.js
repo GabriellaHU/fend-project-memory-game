@@ -23,6 +23,7 @@ function createDeck() {
     deckList.removeChild(deckList.firstChild);
   }
 
+
   // shuffles the array of card icons using the provided "shuffle" method
   shuffle(cardIconClasses);
 
@@ -73,6 +74,7 @@ restartBtn.addEventListener('click', function () {
   createDeck();
   removeFragmentCards();
   resetMoves();
+  stopWatch();
   });
 
 
@@ -94,6 +96,11 @@ function inspectCard(e) {
      e.target.classList.add('open');
      let clonedCard = e.target.firstChild.cloneNode();
      openCardFragment.appendChild(clonedCard);
+
+     if (timerOn === false) {
+       startWatch();
+     }
+
    };
    checkMatching();
  };
@@ -185,6 +192,7 @@ function animateNoMatch(array) {
 
  };
 
+
  function turnBackCards(comparedCards) {
 
     comparedCards.forEach(function(nMCard) {
@@ -214,7 +222,7 @@ function increaseCounter() {
   moveCounter.textContent = moveNum;
 };
 
-// if all cards have matched, display a message
+// if all cards have been matched, display a message
 function countScore() {
   scoreNum++;
   if (scoreNum === 8) {
@@ -238,7 +246,69 @@ function scoreMessage() {
    createDeck();
    removeFragmentCards();
    resetMoves();
+   stopWatch();
 }
+
+
+
+// ------------------------------------------------------------
+// -------------------------- TIMER ---------------------------
+// ------------------------------------------------------------
+// code based on https://www.ostraining.com/blog/coding/stopwatch/
+
+let getSecs;
+let getMins;
+
+let seconds = 0;
+let minutes = 0;
+
+let clearTime;
+let timerOn = false
+
+
+function startWatch() {
+
+   // for checking wether the timer is already running
+   timerOn = true;
+
+   /* check if seconds is equal to 60 and add a +1 to minutes, and set seconds to 0 */
+   if (seconds === 60) {
+     seconds = 0;
+     minutes = minutes + 1;
+   };
+
+   /* use javascript ternary operator to format how the minutes look and add 0 to minutes if less than 10 */
+   getMins = (minutes < 10) ? (`0${minutes} : `) : (`${minutes} : `);
+   getSecs = (seconds < 10) ? (`0${seconds}`) : (`${seconds}`);
+
+   // display the stopwatch
+   seconds++;
+   console.log('Time: ' + getMins + getSecs);
+
+   /* call the setTimeout() to keep the stop watch alive ! */
+   clearTime = setTimeout('startWatch()', 1000);
+ };
+
+
+ //create a function to stop the time
+ function stopWatch() {
+
+   timerOn = false;
+
+   let time = getMins + getSecs;
+   console.log('Fulltime: ' + time);
+
+   clearTimeout(clearTime);
+   resetTime();
+
+ };
+
+ function resetTime() {
+   seconds = 0;
+   minutes = 0;
+ }
+
+
 
 // ------------------------------------------------------------
 // ----------- REMOVE OPEN CARDS & RESET VALUES ---------------
