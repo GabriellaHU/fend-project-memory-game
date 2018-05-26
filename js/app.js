@@ -102,20 +102,21 @@ function inspectCard(e) {
 // compares the open cards based on the information stored in the fragment
  function checkMatching() {
 
-   const checkedCards = openCardFragment.children;
+  const comparedSymbols = openCardFragment.children;
+  const comparedCards = deckList.querySelectorAll('.open');
 
-   if (checkedCards.length > 1 && checkedCards[0].className.toString() === checkedCards[1].className.toString()) {
+   if (comparedSymbols.length > 1 && comparedSymbols[0].className.toString() === comparedSymbols[1].className.toString()) {
      // console.log('same card');
     deckList.style = 'pointer-events: none';
     increaseCounter();
-    matchTimer();
+    matchTimer(comparedCards);
   }
 
-  else if (checkedCards.length > 1 && checkedCards[0].className.toString() != checkedCards[1].className.toString()) {
+  else if (comparedSymbols.length > 1 && comparedSymbols[0].className.toString() != comparedSymbols[1].className.toString()) {
     // console.log('not the same');
     deckList.style = 'pointer-events: none';
     increaseCounter();
-    noMatchTimer();
+    noMatchTimer(comparedCards);
   }
 }
 
@@ -125,16 +126,19 @@ function inspectCard(e) {
 // -------------------- DELAYING OUTCOMES ---------------------
 // ------------------------------------------------------------
 
-function matchTimer() {
- window.setTimeout(matchCards, 1000);
- // console.log('matchTimer started');
- animateMatch();
+function matchTimer(array) {
+
+  animateMatch(array);
+  window.setTimeout(matchCards, 1000, array);
+  // console.log('matchTimer started');
+
 }
 
- function noMatchTimer() {
-   window.setTimeout(turnBackCards, 1500);
-   // console.log('Timer started');
-   animateNoMatch();
+function noMatchTimer(array) {
+
+  animateNoMatch(array);
+  window.setTimeout(turnBackCards, 1500, array);
+  // console.log('Timer started');
 }
 
 function messageTimer() {
@@ -142,35 +146,37 @@ function messageTimer() {
   window.setTimeout(scoreMessage, 1000);
 }
 
+
+
 // ------------------------------------------------------------
 // ------------------- MATCHING ANIMATION ---------------------
 // ------------------------------------------------------------
 
-function animateMatch() {
-  const animCards = deckList.querySelectorAll('.open');
+function animateMatch(array) {
 
-  animCards[0].classList.add('pulse', 'match');
-  animCards[1].classList.add('pulse', 'match');
+  array.forEach(function(mCard) {
+      mCard.classList.add('pulse', 'match');
+  });
 }
 
-function animateNoMatch() {
-  const animatedSymbol = document.querySelectorAll('.open');
+function animateNoMatch(array) {
 
-  animatedSymbol[0].classList.add('wobble', 'nomatch');
-  animatedSymbol[1].classList.add('wobble', 'nomatch');
+  array.forEach(function(nMCard) {
+    nMCard.classList.add('wobble', 'nomatch');
+  });
 }
+
 
 
 // ------------------------------------------------------------
 // -------------------- MATCHING OUTCOMES ---------------------
 // ------------------------------------------------------------
 
- function matchCards() {
+ function matchCards(comparedCards) {
 
-   let matchedCards = deckList.querySelectorAll('.open');
-
-   matchedCards[0].classList.remove('pulse');
-   matchedCards[1].classList.remove('pulse');
+   comparedCards.forEach(function(mCard) {
+     mCard.classList.remove('pulse');
+   });
 
    deckList.style = 'pointer-events: auto';
 
@@ -179,12 +185,11 @@ function animateNoMatch() {
 
  };
 
- function turnBackCards() {
+ function turnBackCards(comparedCards) {
 
-  let noMatchCards = document.querySelectorAll('.nomatch');
-
-    noMatchCards[0].classList.remove('wobble', 'nomatch');
-    noMatchCards[1].classList.remove('wobble', 'nomatch');
+    comparedCards.forEach(function(nMCard) {
+      nMCard.classList.remove('wobble', 'nomatch');
+    });
 
     deckList.style = 'pointer-events: auto';
 
