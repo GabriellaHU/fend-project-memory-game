@@ -2,19 +2,25 @@
 
 ## Table of Contents
 
-* [Instructions](#instructions)
+* [Summary](#summary)
 * [Contributing](#contributing)
 
-## Instructions
+## Summary
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+A memory game project based on the starter code provided by Udacity.
 
-To get started, open `js/app.js` and start building out the app's functionality
+### Basic specifications met:
+- **Memory Game Logic:** The game randomly shuffles the cards. A user wins once all cards have successfully been matched.
+- **Congratulations Popup:** When a user wins the game, a modal appears to congratulate the player and ask if they want to play again. It also tells the user how much time it took to win the game, and what the star rating was.
+- **Restart Button:** A restart button allows the player to reset the game board, the timer, and the star rating.
+- **Star Rating:** The game displays a star rating (from 1 to 3) that reflects the player's performance. At the beginning of a game, it displays 3 stars. After 15 of moves, it changes to a lower star rating. After a 10 more moves, it changes to a even lower star rating (down to 1).
+- **Timer** When the player starts a game, a displayed timer also starts. Once the player wins the game, the timer stops.
+- **Move Counter**: Game displays the current number of moves a user has made.
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+### Additional functions
+- CSS animations when cards are clicked, unsuccessfully matched, and successfully matched.
+
 
 ## Contributing
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+This is a personal project, therefore pull requests will not be accepted.
