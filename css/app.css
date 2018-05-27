@@ -53,7 +53,7 @@ h1 {
     display: flex;
     justify-content: space-between;
     text-align: left;
-    margin: 0 20px 10px 20px;
+    margin: 20px 20px 10px;
     flex-basis: 100%;
 }
 
@@ -74,7 +74,7 @@ h1 {
 }
 
 .scores{
-  flex-basis: 200px;
+  flex-basis: 170px;
 }
 
 .timer{
@@ -207,14 +207,15 @@ media-queries
       flex-basis: 525px;
   }
 
+  .score-panel {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
   .card {
       flex-basis: 100px;
       height: 100px;
       margin-bottom: 25px;
-  }
-
-  .score-panel {
-    font-size: 1.2em;
   }
 
 }
