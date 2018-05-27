@@ -1,3 +1,5 @@
+let time = 1;
+
 // ------------------------------------------------------------
 // ------------------- CREATE STARTER DECK --------------------
 // ------------------------------------------------------------
@@ -75,6 +77,7 @@ restartBtn.addEventListener('click', function () {
   createDeck();
   removeFragmentCards();
   resetMoves();
+  resetRating();
   stopWatch();
   });
 
@@ -151,7 +154,7 @@ function noMatchTimer(array) {
 
 function messageTimer() {
   // console.log('messageTimer started');
-  window.setTimeout(scorePopup, 1000);
+  window.setTimeout(scorePopup, 1000, moveNum, rating, time);
 }
 
 
@@ -262,8 +265,8 @@ function decreaseRating() {
 // ----------------- CONGRATULATION POPUP ---------------------
 // ------------------------------------------------------------
 
-function scorePopup() {
 
+function scorePopup(num1, num2, num3) {
 
 
   const popup = document.createElement('div');
@@ -276,35 +279,25 @@ function scorePopup() {
   popup.appendChild(popupContent);
 
   const popupTitle = document.createElement('p');
-  popupContent.classList.add('popup-title');
-  popupTitle.innerHTML = 'Congratulations! You won';
+  popupTitle.classList.add('popup-title');
+  popupTitle.textContent = 'Congratulations! You won';
   popupContent.appendChild(popupTitle);
 
   const popupText = document.createElement('p');
-  popupContent.classList.add('popup-text');
-  popupContent.innerHTML = 'You have solved the game in x moves. You game time was y:z minutes.';
+  popupText.classList.add('popup-text');
+  popupText.textContent = `You have solved the game in ${num1} moves and are rated with ${num2} stars. Your complete game time was ${num3}.`;
   popupContent.appendChild(popupText);
 
   const popupBtn= document.createElement('button');
-  popupContent.classList.add('popup-btn');
+  popupBtn.classList.add('popup-btn');
+  popupBtn.setAttribute('type', 'button');
   popupBtn.innerHTML = 'Play again';
   popupContent.appendChild(popupBtn);
 
-
+  popupBtn.addEventListener('click', dismissPopup);
 
   stopWatch();
 
-
-  // if (moveNum <=25) {
-  //     window.alert('Congratulations! You have solved the game in ' + moveNum + ' moves. You are a real pro!');
-  //   }
-  // else if (25 < moveNum & moveNum <= 45) {
-  //     window.alert('Congratulations! You have solved the game in ' + moveNum + ' moves. Well done!');
-  //   }
-  //
-  // else {
-  //     window.alert('You have solved the game in ' + moveNum + ' moves. Dont worry, practice makes perfect');
-  //  }
 
 }
 
@@ -315,6 +308,7 @@ function dismissPopup() {
   document.body.removeChild(popup);
 
   resetMoves();
+  resetRating();
   createDeck();
 };
 
@@ -365,6 +359,7 @@ function startWatch() {
 
 
  // function to stop the timer
+
  function stopWatch() {
 
    timerOn = false;
@@ -374,6 +369,8 @@ function startWatch() {
 
    clearTimeout(clearTime);
    resetTime();
+
+   return time;
 
  };
 
@@ -413,3 +410,18 @@ function resetMoves() {
   moveNum = 0;
   moveCounter.textContent = moveNum;
 };
+
+function resetRating() {
+
+  if (rating === 2) {
+    stars[2].classList.remove('inactive');
+  };
+
+  if (rating === 1) {
+    stars[1].classList.remove('inactive');
+    stars[2].classList.remove('inactive');
+  };
+
+  rating = 3;
+
+}
