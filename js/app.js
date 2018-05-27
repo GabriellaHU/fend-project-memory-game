@@ -151,7 +151,7 @@ function noMatchTimer(array) {
 
 function messageTimer() {
   // console.log('messageTimer started');
-  window.setTimeout(scoreMessage, 1000);
+  window.setTimeout(scorePopup, 1000);
 }
 
 
@@ -221,7 +221,7 @@ moveCounter.textContent = moveNum;
 function increaseCounter() {
   moveNum++;
   moveCounter.textContent = moveNum;
-  if (moveNum === 15 || moveNum === 25) {
+  if (moveNum === 10 || moveNum === 20) {
     decreaseRating();
   }
 };
@@ -233,26 +233,6 @@ function countScore() {
     messageTimer();
     }
 };
-
-function scoreMessage() {
-
-  if (moveNum <=25) {
-      window.alert('Congratulations! You have solved the game in ' + moveNum + ' moves. You are a real pro!');
-    }
-  else if (25 < moveNum & moveNum <= 45) {
-      window.alert('Congratulations! You have solved the game in ' + moveNum + ' moves. Well done!');
-    }
-
-  else {
-      window.alert('You have solved the game in ' + moveNum + ' moves. Dont worry, practice makes perfect');
-   }
-
-   createDeck();
-   removeFragmentCards();
-   resetMoves();
-   stopWatch();
-}
-
 
 
 // ------------------------------------------------------------
@@ -273,8 +253,72 @@ function decreaseRating() {
    if (rating === 1) {
      stars[1].classList.add('inactive');
    };
-
 };
+
+
+
+
+// ------------------------------------------------------------
+// ----------------- CONGRATULATION POPUP ---------------------
+// ------------------------------------------------------------
+
+function scorePopup() {
+
+
+
+  const popup = document.createElement('div');
+  // popup.classList.add('fadeIn');
+  popup.classList.add('popup');
+  document.body.appendChild(popup);
+
+  const popupContent = document.createElement('div');
+  popupContent.classList.add('popup-content');
+  popup.appendChild(popupContent);
+
+  const popupTitle = document.createElement('p');
+  popupContent.classList.add('popup-title');
+  popupTitle.innerHTML = 'Congratulations! You won';
+  popupContent.appendChild(popupTitle);
+
+  const popupText = document.createElement('p');
+  popupContent.classList.add('popup-text');
+  popupContent.innerHTML = 'You have solved the game in x moves. You game time was y:z minutes.';
+  popupContent.appendChild(popupText);
+
+  const popupBtn= document.createElement('button');
+  popupContent.classList.add('popup-btn');
+  popupBtn.innerHTML = 'Play again';
+  popupContent.appendChild(popupBtn);
+
+
+
+  stopWatch();
+
+
+  // if (moveNum <=25) {
+  //     window.alert('Congratulations! You have solved the game in ' + moveNum + ' moves. You are a real pro!');
+  //   }
+  // else if (25 < moveNum & moveNum <= 45) {
+  //     window.alert('Congratulations! You have solved the game in ' + moveNum + ' moves. Well done!');
+  //   }
+  //
+  // else {
+  //     window.alert('You have solved the game in ' + moveNum + ' moves. Dont worry, practice makes perfect');
+  //  }
+
+}
+
+function dismissPopup() {
+
+
+  const popup = document.querySelector('.popup');
+  document.body.removeChild(popup);
+
+  resetMoves();
+  createDeck();
+};
+
+
 
 
 // ------------------------------------------------------------
@@ -301,7 +345,7 @@ function startWatch() {
    timerOn = true;
 
    /* check if seconds is equal to 60 and add a +1 to minutes, and set seconds to 0 */
-   if (seconds === 60) {
+   if (seconds === 60 && minutes < 60) {
      seconds = 0;
      minutes++;
    };
@@ -320,7 +364,7 @@ function startWatch() {
  };
 
 
- //create a function to stop the time
+ // function to stop the timer
  function stopWatch() {
 
    timerOn = false;
@@ -333,17 +377,16 @@ function startWatch() {
 
  };
 
- function resetTime() {
-   seconds = 0;
-   minutes = 0;
-   gameTime.innerHTML = 'Time 00 : 00';
- }
-
-
-
 // ------------------------------------------------------------
-// ----------- REMOVE OPEN CARDS & RESET VALUES ---------------
+// ---------------------- RESET VALUES ------------------------
 // ------------------------------------------------------------
+
+
+function resetTime() {
+  seconds = 0;
+  minutes = 0;
+  gameTime.innerHTML = 'Time 00 : 00';
+}
 
 
 function removeFragmentCards() {
@@ -362,8 +405,8 @@ function removeFragmentCards() {
    if (openCardRemoval[1]) {
     openCardRemoval[1].classList.remove('open');
   }
-
 }
+
 
 function resetMoves() {
   scoreNum = 0;
