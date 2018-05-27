@@ -1,4 +1,5 @@
-let time = 1;
+// timer is not started by default
+let timerOn = false
 
 // ------------------------------------------------------------
 // ------------------- CREATE STARTER DECK --------------------
@@ -79,6 +80,7 @@ restartBtn.addEventListener('click', function () {
   resetMoves();
   resetRating();
   stopWatch();
+  resetTime();
   });
 
 
@@ -101,7 +103,7 @@ function inspectCard(e) {
      let clonedCard = e.target.firstChild.cloneNode();
      openCardFragment.appendChild(clonedCard);
 
-     if (timerOn === false) {
+    if (timerOn === false) {
        startWatch();
      }
 
@@ -150,11 +152,6 @@ function noMatchTimer(array) {
   animateNoMatch(array);
   window.setTimeout(turnBackCards, 1500, array);
   // console.log('Timer started');
-}
-
-function messageTimer() {
-  // console.log('messageTimer started');
-  window.setTimeout(scorePopup, 1000, moveNum, rating, time);
 }
 
 
@@ -229,13 +226,20 @@ function increaseCounter() {
   }
 };
 
+
 // if all cards have been matched, display a message
 function countScore() {
   scoreNum++;
   if (scoreNum === 8) {
+    stopWatch();
     messageTimer();
     }
 };
+
+function messageTimer() {
+  // console.log('messageTimer started');
+  window.setTimeout(scorePopup, 1500, moveNum, rating, getMins, getSecs);
+}
 
 
 // ------------------------------------------------------------
@@ -262,11 +266,12 @@ function decreaseRating() {
 
 
 // ------------------------------------------------------------
-// ----------------- CONGRATULATION POPUP ---------------------
+// ----------------------- SCORE POPUP ------------------------
 // ------------------------------------------------------------
 
 
-function scorePopup(num1, num2, num3) {
+
+function scorePopup(num1, num2, num3, num4) {
 
 
   const popup = document.createElement('div');
@@ -280,12 +285,12 @@ function scorePopup(num1, num2, num3) {
 
   const popupTitle = document.createElement('p');
   popupTitle.classList.add('popup-title');
-  popupTitle.textContent = 'Congratulations! You won';
+  popupTitle.textContent = 'Congratulations! You won the game';
   popupContent.appendChild(popupTitle);
 
   const popupText = document.createElement('p');
   popupText.classList.add('popup-text');
-  popupText.textContent = `You have solved the game in ${num1} moves and are rated with ${num2} stars. Your complete game time was ${num3}.`;
+  popupText.textContent = `You have solved the game in ${num1} moves and are rated with ${num2} stars. Your complete game time was ${num3}${num4}.`;
   popupContent.appendChild(popupText);
 
   const popupBtn= document.createElement('button');
@@ -296,7 +301,7 @@ function scorePopup(num1, num2, num3) {
 
   popupBtn.addEventListener('click', dismissPopup);
 
-  stopWatch();
+  resetTime();
 
 
 }
@@ -330,7 +335,6 @@ let seconds = 0;
 let minutes = 0;
 
 let clearTime;
-let timerOn = false
 
 
 function startWatch() {
@@ -353,6 +357,7 @@ function startWatch() {
   // display the stopwatch / timer
    gameTime.innerHTML = 'Time ' + getMins + getSecs;
 
+
    /* call the setTimeout() to keep the stop watch alive ! */
    clearTime = setTimeout('startWatch()', 1000);
  };
@@ -360,17 +365,12 @@ function startWatch() {
 
  // function to stop the timer
 
+
  function stopWatch() {
 
    timerOn = false;
 
-   let time = getMins + getSecs;
-   console.log('Fulltime: ' + time);
-
    clearTimeout(clearTime);
-   resetTime();
-
-   return time;
 
  };
 
