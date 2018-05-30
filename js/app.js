@@ -76,7 +76,7 @@ const restartBtn = document.querySelector('.restart');
 restartBtn.addEventListener('click', function () {
   // console.log('The restart button was clicked!');
   createDeck();
-  removeFragmentCards();
+  removeOpenClass();
   resetMoves();
   resetRating();
   stopWatch();
@@ -89,43 +89,41 @@ restartBtn.addEventListener('click', function () {
 // --------------- INSPECTON OF THE OPEN CARDS ----------------
 // ------------------------------------------------------------
 
-// a fragment that stores the currently open 1 or 2 cards
-const openCardFragment = document.createDocumentFragment();
 
-// a function that copies the open cards to the fragment
 deckList.addEventListener('click', inspectCard);
-
 
 function inspectCard(e) {
   // the deck shouldn't get the card classname
   if (e.target.className != 'deck' ) {
     e.target.classList.add('open');
-    let clonedCard = e.target.firstChild.cloneNode();
-    openCardFragment.appendChild(clonedCard);
 
     if (timerOn === false) {
       startWatch();
     }
 
   }
-  checkMatching();
+
+  const comparedCards = deckList.querySelectorAll('.open');
+
+  if (comparedCards.length > 1) {
+    checkMatching(comparedCards);
+  }
 }
 
 
-// compares the open cards based on the information stored in the fragment
-function checkMatching() {
+// compares the open cards
+function checkMatching(comparedCards) {
 
-  const comparedSymbols = openCardFragment.children;
-  const comparedCards = deckList.querySelectorAll('.open');
+  const comparedSymbols = deckList.querySelectorAll('.open > i')
 
-  if (comparedSymbols.length > 1 && comparedSymbols[0].className.toString() === comparedSymbols[1].className.toString()) {
+  if (comparedSymbols[0].classList.toString() === comparedSymbols[1].classList.toString()) {
     // console.log('same card');
     deckList.style = 'pointer-events: none';
     increaseCounter();
     matchTimer(comparedCards);
   }
 
-  else if (comparedSymbols.length > 1 && comparedSymbols[0].className.toString() != comparedSymbols[1].className.toString()) {
+  else {
     // console.log('not the same');
     deckList.style = 'pointer-events: none';
     increaseCounter();
@@ -188,7 +186,7 @@ function matchCards(comparedCards) {
 
   deckList.style = 'pointer-events: auto';
 
-  removeFragmentCards();
+  removeOpenClass();
   countScore();
 
 }
@@ -202,7 +200,7 @@ function turnBackCards(comparedCards) {
 
   deckList.style = 'pointer-events: auto';
 
-  removeFragmentCards();
+  removeOpenClass();
 
 }
 
@@ -386,12 +384,7 @@ function resetTime() {
 }
 
 
-function removeFragmentCards() {
-
-  // remove cloned cards from the fragment
-  while (openCardFragment.firstChild) {
-    openCardFragment.removeChild(openCardFragment.firstChild);
-  }
+function removeOpenClass() {
 
   // remove all open classes
   let openCardRemoval = document.querySelectorAll('.open');
